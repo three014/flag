@@ -32,6 +32,10 @@ impl Flag {
         self.0.waker.wake();
     }
 
+    pub fn is_set(&self) -> bool {
+        self.0.set.load(Ordering::Relaxed)
+    }
+
     pub fn reset(&mut self) -> bool {
         if let Some(inner) = Arc::get_mut(&mut self.0) {
             inner.waker.take();
